@@ -1,0 +1,46 @@
+.formcontent {
+    display: block;
+    margin: 20px;
+}
+
+body {
+    border: solid 5px blue;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    color: blue;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+th, td {
+    padding: 5px 10px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+th {
+    background-color: gray;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tableHead {
+    font-size: 220%;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: black;
+    padding: 10px;
+    display: inline-block;
+}
