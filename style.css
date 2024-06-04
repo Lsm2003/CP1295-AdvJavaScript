@@ -1,4 +1,4 @@
-.formcontent {
+.formrow {
     display: block;
     margin: 20px;
 }
@@ -43,4 +43,8 @@ tr:nth-child(even) {
     color: black;
     padding: 10px;
     display: inline-block;
+}
+
+span {
+    color: red;
 }

@@ -1,47 +1,124 @@
 $(document).ready(function () {
-    $("#TotalWeight").val($("#EmptyWeight").val())
-    $('#CargoProcessForm').after("<div id=CargoManifestDiv></div>");
 
-    $("#CargoProcessForm").on("submit", (event) => {
+    $("#currentWeight").val($("#emptyWeight").val())
+    $('#CargoProcessingForm').after("<div id=CargoManifestDiv></div>");
 
-        event.preventDefault();
-
-        var boxCarID = $("#BoxCarID").val();
-        if ($(`#${boxCarID}`).length === 0) {
-            
-            var tableTitle = $("<label class='tableHead'></label>").text(`Cargo Box Car Manifest for Box Car ${boxCarID}`);
-
-            var table = $("<table></table>").attr("id", boxCarID);
-
-            var tableheader = $("<tr></tr>"); 
-
-            var th1 = $("<th></th>").text("Transport ID");
-            tableheader.append(th1);
-            
-            var th2 = $("<th></th>").text("Description");
-            tableheader.append(th2);
-            
-            var th3 = $("<th></th>").text("Cargo Weight");
-            tableheader.append(th3);
-
-            var totalWeight = $("<tr><td colspan='2'>Total Cargo Weight</td></tr>");
-            totalWeight.append($("<td id='CurrentWeight'></td>").text("0"))
-
-            $("#CargoManifestDiv").append(tableTitle);
-            table.append(tableheader);
-            table.append(totalWeight);
-            $("#CargoManifestDiv").append(table);
-            
+    $("#CargoProcessingForm").on("submit", (event) => {
+        $("#cargoProcessingErrorMessage").empty();
+        event.preventDefault(); 
+        if ($("#transportId").val() == "" | $("#description").val() == "" | $("#cargoWeight").val() == "") {
+            $("#cargoProcessingErrorMessage").text("please fill all fields")
+            return
+        }
+        else if (isNaN(parseInt($("#cargoWeight").val()))) {
+            $("#cargoProcessingErrorMessage").text("Cargo weight must be a number")
+            return
+        }
+        else if (parseInt($("#cargoWeight").val()) + parseInt($("#emptyWeight").val()) > parseInt($("#maxWeight").val()) || parseInt($("#cargoWeight")) < 0 ) {
+            $("#cargoProcessingErrorMessage").text("Cargos max weight has beem exceeded ")
+            return
+        }
+       
+        if ($(`#cargoStatus`).length === 0) {
+            createCargoStatus()
         }
 
-        var info = $("<tr></tr>");
-        info.append($("<td></td>").text($("#TransportID").val()));
-        info.append($("<td></td>").text($("#Description").val()));
-        info.append($("<td></td>").text($("#CargoWeight").val()));
+        const boxCarId = $("#boxCarId").val();
 
-        $(`#${boxCarID} tr:last`).before(info);
-        $("#CurrentWeight").text(parseInt($("#CurrentWeight").text()) + parseInt($("#CargoWeight").val()));
-        $("#TotalWeight").val(parseInt($("#TotalWeight").val()) + parseInt($("#CargoWeight").val()));
+        if ($(`#${boxCarId}`).length === 0) {
+        createManifest(boxCarId)
+        }
+        
+        if (parseInt($("#cargoWeight").val())  +  parseInt($("#currentWeight").val()) < parseInt($("#maxWeight").val())) {
+            addToStatus(boxCarId)
+            addToManifest(boxCarId)
+        }
+        else {
+            addToStatus("Warehouse")
+        }
       
     });
 });
+
+function createManifest (boxCarId) {
+   
+        var manifestLabel = $("<label></label>").text(`Cargo Box Car Manifest for ${boxCarId}`);
+
+        var table = $("<table></table>").attr("id", boxCarId);
+
+        var tableheader = $("<tr></tr>");
+
+        var th1 = $("<th></th>").text("Transport ID");
+        tableheader.append(th1);
+        
+        var th2 = $("<th></th>").text("Description");
+        tableheader.append(th2);
+        
+        var th3 = $("<th></th>").text("Cargo Weight");
+        tableheader.append(th3);
+
+        var totalWeightRow = $("<tr><td colspan='2'>Total Cargo Weight</td></tr>");
+        totalWeightRow.append($("<td id='totalWeight'></td>").text("0"))
+
+        table.append(tableheader);
+        $("#CargoManifestDiv").append(manifestLabel);
+        //table.append(tableheader);
+        table.append(totalWeightRow);
+        $("#CargoManifestDiv").append(table);
+    }
+
+function createCargoStatus () {    
+   
+    var statusLabel = $("<label></label>").text(`Cargo Status`);
+    statusLabel.attr('class', 'tableHeader')
+    
+    var table = $("<table></table>").attr("id", 'cargoStatus');
+
+    var tableheader = $("<tr></tr>");
+
+    var th1 = $("<th></th>").text("Transport ID");
+    tableheader.append(th1);
+    
+    var th2 = $("<th></th>").text("Description");
+    tableheader.append(th2);
+    
+    var th3 = $("<th></th>").text("Weight");
+    tableheader.append(th3);
+
+    var th4 = $("<th></th>").text("Status");
+    tableheader.append(th4);
+
+    table.append(tableheader);
+    $("#CargoManifestDiv").append(statusLabel);
+    $("#CargoManifestDiv").append(table);
+
+}
+
+function addToManifest(boxCarId) {
+    
+        let DataRow = $("<tr></tr>");
+
+        DataRow.append($("<td></td>").text($("#transportId").val()));
+        DataRow.append($("<td></td>").text($("#description").val()));
+        DataRow.append($("<td></td>").text($("#cargoWeight").val()));
+
+        $(`#${boxCarId} tr:last`).before(DataRow);
+        
+        $("#totalWeight").text(parseInt($("#totalWeight").text()) + parseInt($("#cargoWeight").val()));
+        $("#currentWeight").val(parseInt($("#currentWeight").val()) + parseInt($("#cargoWeight").val())) 
+
+
+}
+
+function addToStatus(Location) {
+    
+    let DataRow = $("<tr></tr>");
+
+    DataRow.append($("<td></td>").text($("#transportId").val()));
+    DataRow.append($("<td></td>").text($("#description").val()));
+    DataRow.append($("<td></td>").text($("#cargoWeight").val()));
+    DataRow.append($("<td></td>").text(Location))
+
+    $("#cargoStatus").append(DataRow)
+
+}
