@@ -13,31 +13,37 @@
 
     <div id="divA">
         <h1>CNA - Rolling Stock - MAIN MENU</h1>
+        <h4>Select Desired Activity via Radio Button</h4>
+        
         <label for="Create_boxcar_radio_btn">Create Boxcar</label>
-        <input name="menu" id="Create_boxcar_radio_btn" data-index="2" type="radio">
+        <input name="menu" id="Create_boxcar_radio_btn" data-index="2" type="radio" onchange="DisplayDivB()" >
+
         <label for="Add_freight_radio_btn">Add Freight</label>
-        <input name="menu" id="Add_freight_radio_btn" data-index="3" type="radio">
+        <input name="menu" id="Add_freight_radio_btn" data-index="3" type="radio" onchange="DisplayDivD()">
+        
         <label for="Boxcar_data_radio_btn">Boxcar Data</label>
-        <input name="menu" id="Boxcar_data_radio_btn" data-index="4" type="radio">
+        <input name="menu" id="Boxcar_data_radio_btn" data-index="4" type="radio" onchange="DisplayDivC()">
+        
         <label for="Warehouse_data_radio_btn">Warehouse Data</label>
-        <input name="menu" id="Warehouse_data_radio_btn" data-index="5" type="radio">
+        <input name="menu" id="Warehouse_data_radio_btn" data-index="5" type="radio" onchange="DisplayDivF()">
+        
         <label for="All_freight_status_radio_btn">All Freight Status</label>
-        <input name="menu" id="All_freight_status_radio_btn" data-index="6" type="radio">
+        <input name="menu" id="All_freight_status_radio_btn" data-index="6" type="radio" onchange="DisplayDivG()">
     </div>
 
     <div id="divB" hidden>
         <h1>Div B</h1>
-        <form name="create_boxcar">   
+        <form id="createBoxcarForm">   
         <label for="Boxcar_ID_input">Boxcar ID:</label>
-         <input id="Boxcar_ID_input" name="boxcar_id" type="text" required  > 
+         <input id="Boxcar_ID_input" name="boxcar_id" type="text" required> 
         <span></span>
 
         <label for="TAREWeight_input">TARE weight</label>
-        <input id="TAREWeight_input" name="tare_weight" type="number" min="0" max="20000">
+        <input id="TAREWeight_input" name="tare_weight" type="number" >
         <span></span>
 
         <label for="Max_Gross_Weight_input">Max Gross Weight</label>
-        <input id="Max_Gross_Weight_input" name="max_gross_weight" type="number" min="0" max="200000">
+        <input id="Max_Gross_Weight_input" name="max_gross_weight" type="number" >
         <span></span>
 
         <label for="DivB_Cargo_Weight_input" >Cargo Weight</label>
@@ -54,4 +60,111 @@
         <button class="Return_to_main_page_btn">Return To Main Page</button>
     </div>
 
+    <div id="divC" hidden>
+        <h1>Div C</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Box Car ID</th>
+                    <th>TARE</th>
+                    <th>Max Gross</th>
+                    <th>Cargo</th>
+                    <th>Gross</th>
+                </tr>    
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+            </table>
+        <span id="Total_cargo_weight_span"></span>
+        <button id="return_to_create_box_car_btn">Return to Create Box Car</button>
+        <button class="Return_to_main_page_btn">Return To Main Page</button>
+    </div>
+
+    <div id="divD" hidden>
+        <h1>Div D</h1>
+            <table>
+                <caption>Box Car List</caption>
+                <thead>
+                    <tr>
+                        <th>Box Car ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>         
+            </table>
+            <form id="cargoForm">
+                <label for="Box_Car_Selected_input">Box Car Selected</label>
+                <input id="Box_Car_Selected_input" type="text" readonly>
+                <label for="Transport_ID_input">Transport ID</label>
+                <input id="Transport_ID_input" type="text">
+                <label for="Description_input">Description</label>
+                <input id="Description_input" type="text">
+                <label for="DivD_Cargo_Weigh_input">Cargo Weight</label>
+                <input id="DivD_Cargo_Weigh_input" type="text">
+                <button type="submit">Process Cargo</button><span></span>        
+                <button type="reset">Reset Form</button>
+            </form>
+            <button class="Return_to_main_page_btn">Return to Main Page</button>
+    </div>
+
+    <div id="divE" hidden>
+        <h1>Div E</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">Total Cargo Weight</td>
+                    <td id="divE_Total_Cargo_Weight_cell"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button onclick="returnToCreateFreightE()">Return to Create Freight Entry</button>
+        <button class="Return_to_main_page_btn">Return to Main Page</button>
+    </div>
+
+    <div id="divF" hidden>
+        <H1>div F</H1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">Total Cargo Weight</td>
+                    <td id="divF_Total_Cargo_Weight_cell"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button onclick="returnToCreateFreightF()">Return to Create Freight Entry</button>
+        <button class="Return_to_main_page_btn">Return to Main Page</button>
+    </div>
+
+    <div id="divG" hidden>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            </table>
+            <button class="Return_to_main_page_btn">Return to Main Page</button>
+    </div>
+    
 </body>
+</html>

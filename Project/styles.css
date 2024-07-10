@@ -1,86 +1,115 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: white;
-    margin: 0 auto;
-    width: 600px;
-    border: 5px solid black;
-    padding: 0 2em 1em;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
-    color: blue;
+    color: #212529;
+    font-size: 30px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-div {
-    
-    margin-bottom: 1em;
+h4 {
+    color: darkgray;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"], input[type="radio"] {
+    padding: 8px;
+    font-size: 15px;
+    margin: 5px 0 15px;
+    width: calc(100% - 20px);
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+}
+
+button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: green;
+    color: white;
+    transition: background-color 0.5s;
+}
+
+button:hover {
+    background-color: darkgreen;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table, th, td {
+    border: 3px solid black;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+th {
+    background-color: lightgray;
+}
+
+tfoot td {
+    font-weight: bold;
+    background-color: lightgray;
+}
+
+caption {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+div {
+    padding: 20px;
+    border: 5px solid blue;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.Return_to_main_page_btn {
+    background-color: gray;
+}
+
+.Return_to_main_page_btn:hover {
+    background-color: gray;
+}
+
+#Total_cargo_weight_span, #divE_Total_Cargo_Weight_cell, #divF_Total_Cargo_Weight_cell {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin: 0 10px;
+}
+
+form {
     display: flex;
-    width: 11em;
-    text-align: right;
-}
-
-input {
-    margin-left: 1em;
-    margin-right: 0.5em;
-}
-
-.backgroundlb {
-    background-color: lightblue;
-
+    flex-direction: column;
 }
 
 span {
     color: red;
+    font-size: 12px;
 }
-
-button {
-    margin: 1.5em;
-    padding: auto;
-    display: flex;
-    width: 11em;
-    text-align: right;
-    
-}
-body {
-    font-family: Arial, sans-serif;
-}
-
-table {
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 18px;
-    text-align: left;
-    width: 100%;
-}
-
-thead tr {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
-    font-weight: bold;
-}
-
- th,
- td {
-    padding: 12px 15px;
-    border: 1px solid #dddddd;
-}
-
- tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
- tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
- tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
-
-.selectabletable td:hover {
-    background-color: lightgray;
-  }
