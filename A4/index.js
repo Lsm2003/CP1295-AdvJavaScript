@@ -47,7 +47,7 @@ function calcAvg(scores) {
 
 function getLast3Scores(scores) {
     const len = scores.length;
-    const lastScores = (len <= 3) ? scores.slice() : scores.slice(len - 3, len); // copy last three
+    const lastScores = (len <= 3) ? scores.slice() : scores.slice(len - 3, len);
     return lastScores.reverse();
 }
 
