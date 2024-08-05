@@ -1,3 +1,4 @@
+
 class boxcar {
     constructor(Id, tareWeight, maxGrossWeight) {
         this.Id = Id
@@ -144,14 +145,24 @@ function displayDivF() {
 }
 
 function displayDivG() {
-    $("#divA").hide()
-    $("#divG").show()
+    $("#divA").hide();
+    $("#divG").show();
     
+    let allCargo = [];
     let divGTableBody = $("#divG").find("tbody");
     $("#divG").find("h1").text(`CNA - Warehouse Manifest - Station AAAA`)
     divGTableBody.empty()
-        TRAIN.boxcars.forEach(Boxcar => {
-        Boxcar.cargo.forEach(cargo => {  
+    STATIONS.forEach(station => {
+        station.warehouseManifest.forEach(cargo => {
+            allCargo.push(cargo)
+        })
+    })
+    TRAIN.boxcars.forEach(Boxcar => {
+        Boxcar.cargo.forEach(cargo => { 
+            allCargo.push(cargo)
+         })})
+        
+        allCargo.forEach(cargo => {  
             let freightStatusRow = document.createElement("tr");
             let transportIdCell = document.createElement("td");
             let descriptionCell = document.createElement("td");
@@ -165,7 +176,17 @@ function displayDivG() {
             statusCell.textContent = cargo.status
             freightStatusRow.append(transportIdCell, descriptionCell, weightCell, statusCell);})
         }   
-    )}
+   
+
+function displaySystemSummery() {
+    let totalboxcarweight = TRAIN.boxcars.reduce(function(acc, obj){return acc + obj.cargoWeight()}, 0);
+    let totalWarehouseWeight = STATIONS.reduce(function(acc, obj){return acc + obj.warehouseManifest.reduce(function(acc, obj){return acc + obj.weight}, 0)}, 0)
+    document.cookie = `BoxcarWeight=${totalboxcarweight}; path=/`
+    document.cookie = `warehouseWeight=${totalWarehouseWeight}; path=/`
+        document.cookie = `totalRailSystemWeight=${totalWarehouseWeight + totalboxcarweight}; path=/`
+    window.location.href='summary.html'
+
+}
 
 function createManifestTable(manifestdiv,  cargoArray) {
     let tableTitle = document.createElement('h1')
@@ -179,12 +200,12 @@ function createManifestTable(manifestdiv,  cargoArray) {
         let descriptionCell = document.createElement("td");
         let weightCell = document.createElement("td");
         
-        tbody.append(boxcarIdRow);
         transportIdCell.textContent = cargoUnit.transportId
         descriptionCell.textContent = cargoUnit.description
         weightCell.textContent = cargoUnit.weight
         totalCargoWeight += parseInt(cargoUnit.weight)
-        tbody.append(transportIdCell, descriptionCell, weightCell);
+        boxcarIdRow.append(transportIdCell, descriptionCell, weightCell);
+        tbody.append(boxcarIdRow);
         tableTitle.textContent = cargoUnit.status
     })
     let totalCargoWeightRow = document.createElement("tr")
@@ -278,35 +299,32 @@ function Handle_return_to_menu() {
     $("[name='menu']").prop('checked', false);
 }
 
+function return_to_main_page() {
+    window.location.href='index.html'
+}
+
 function Advance_Day() {
-    $('input').prop('disabled', true)
+    // $('input').prop('disabled', true)
     CURRENTDAY += 1
     $("#dayCounter").val(CURRENTDAY)
     TRAIN.location = STATIONS[Math.min(CURRENTDAY - 1, STATIONS.length - 1)]
     console.log(TRAIN.location)
     TRAIN.boxcars.forEach(boxcar => {
-        boxcar.cargo.forEach(cargo => {
-            console.log(cargo.destination)
-        })
+        for (let i = 0; i < boxcar.cargo.length; i++) {
+            const cargo = boxcar.cargo[i];
+            if (cargo.destination == TRAIN.location.Id) {
+                cargo.status = cargo.destination
+                TRAIN.location.warehouseManifest.push(cargo);
+                boxcar.cargo.splice(i, 1);
+                i--;
+            }
+            
+        }
     });
 };
 
 function offLoadCargo() {}
-// const TESTING = () => {
-//     let sampleBoxcar1 = new boxcar("BX500", 12000, 90000 );
-//     let sampleBoxcar2 = new boxcar("BX505", 15000, 105000 );
-//     let sampleBoxcar3 = new boxcar("BX520", 10000, 80000 );
-//     let sampleCargo1 = new cargo("TXL2031S01", "50000 Shirts", 25000, "BX500");
-//     let sampleCargo2 = new cargo("MED2033S01", "Medical MX45000", 16000, "BX505");
-//     let sampleCargo3 = new cargo("CSX2037S01", "Lamp Oil K1 Drum", 10000, "BX520");
-//     let sampleCargo4 = new cargo("TXL2031S02", "30000 Coats", 30000, "BX500");
-//     let sampleCargo5 = new cargo("MED2033S02", "Medical MX34111", 16000, "BX505");
-//     let sampleCargo6 = new cargo("CSZ2039S02", "Fuel Dsl G1 10000L BL", 8320, "BX520");
-//     sampleBoxcar1.cargo.push(sampleCargo1, sampleCargo4);
-//     sampleBoxcar2.cargo.push(sampleCargo2, sampleCargo5);
-//     sampleBoxcar3.cargo.push(sampleCargo3, sampleCargo6);
-//     TRAIN.boxcars.push(sampleBoxcar1, sampleBoxcar2, sampleBoxcar3);
-//} 
+
 $(function () {
     $("[name='menu']").prop('checked', false)
     $("#dayCounter").val(1)
@@ -327,8 +345,4 @@ $(function () {
         $("#divD").toggle();
         displayDivD();
     })
-    // TESTING()
 })
-
-// TODO
-// see if there isnt a better way to create div e and f without moving buttons around like a doofus

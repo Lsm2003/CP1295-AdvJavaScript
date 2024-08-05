@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <h1>CNA - Rolling Stock - Create New Boxcar</h1>
+    <label for="boxcarWeight">Total Weight in Boxcars</label>
+    <input type="text" id="boxcarWeight" readonly>
+
+    <label for="warehouseWeight">Total Weight in Warehouses</label>
+    <input type="text" id="warehouseWeight" readonly>
+
+    <label for="totalWeight">CNA Rail System Total Weight</label>
+    <input type="text" id="totalWeight" readonly>
+    
+    <button onclick="return_to_main_page()">RETURN to MAIN PAGE</button>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+            $("#boxcarWeight").val(getCookiesByName('BoxcarWeight'));
+            $("#warehouseWeight").val(getCookiesByName('warehouseWeight'));
+            $("#totalWeight").val(getCookiesByName('totalRailSystemWeight'));
+   })
+
+    function getCookiesByName(name) {
+        const cookies = document.cookie;
+        console.log(cookies)
+        let start = cookies.indexOf(name + "=");
+        if (start === -1) {
+            return "";
+        } else {
+            start = start + (name.length + 1);
+            let end = cookies.indexOf(";", start);
+            if (end === -1) {
+                end = cookies.length;
+            }
+        const cookieValue = cookies.substring(start, end);
+        return decodeURIComponent(cookieValue);
+        }
+    };
+</script>
+</html>

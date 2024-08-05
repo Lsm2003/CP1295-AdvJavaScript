@@ -8,17 +8,17 @@
     <Script src="index.js"></Script>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+
     <div id="divA">
-
-        <h1>CNA - Rolling Stock - MAIN MENU</h1>
-        <h4>Select Desired Activity via Radio Button</h4>
-
         <section>
             <label for="dayCounter">DAY</label>
             <input id="dayCounter" readonly value="1">
             <button id="advanceDayButton" onclick="Advance_Day()">ADVANCE DAY Move Train</button>
         </section>
+        <h1>CNA - Rolling Stock - MAIN MENU</h1>
+        <h4>Select Desired Activity via Radio Button</h4>
         
         <label for="Create_boxcar_radio_btn">Create Boxcar</label>
         <input name="menu" id="Create_boxcar_radio_btn" data-index="2" type="radio" onchange="displayDivB()" >
@@ -34,6 +34,9 @@
         
         <label for="All_freight_status_radio_btn">All Freight Status</label>
         <input name="menu" id="All_freight_status_radio_btn" data-index="6" type="radio" onchange="displayDivG()">
+
+        <label for="system_summary_radio_btn">System Summery</label>
+        <input name="menu" id="system_summary_radio_btn" data-index="7" type="radio" onchange="displaySystemSummery()">
     </div>
 
     <div id="divB" hidden>
@@ -101,11 +104,11 @@
                 <label for="Box_Car_Selected_input">Box Car Selected</label>
                 <input id="Box_Car_Selected_input" type="text" readonly>
                 <label for="Transport_ID_input">Transport ID</label>
-                <input id="Transport_ID_input" type="text" value="TSL2013S01"required>
+                <input id="Transport_ID_input" type="text" value=""required>
                 <label for="Description_input">Description</label>
-                <input id="Description_input" type="text" required value="25">
+                <input id="Description_input" type="text" required value="">
                 <label for="DivD_Cargo_Weigh_input">Cargo Weight</label>
-                <input id="DivD_Cargo_Weigh_input" type="number" required value="25000">
+                <input id="DivD_Cargo_Weigh_input" type="number" required value="">
                 <button type="submit">Process Cargo</button><span></span>        
                 <button onclick="displayDivD()">Reset Form</button>
             </form>
@@ -116,7 +119,7 @@
         <button class="returnToCreateFreight">Return to Create Freight Entry</button>
         <button class="Return_to_main_page_btn">Return to Main Page</button>
     </div>
-
+    
     <div id="divF" hidden>
         <button class="returnToCreateFreight">Return to Create Freight Entry</button>
         <button class="Return_to_main_page_btn">Return to Main Page</button>
